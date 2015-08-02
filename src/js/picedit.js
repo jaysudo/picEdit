@@ -2,6 +2,7 @@
  *  Project: PicEdit
  *  Description: Creates an image upload box with tools to edit the image on the front-end before uploading it to the server
  *  Author: Andy V.
+ *  Forked by: Jay Sudo
  *  License: MIT
  */
 
@@ -696,6 +697,7 @@
 					}
 					 //send request
                 var request = new XMLHttpRequest();
+                // Progress display -- Jay Sudo
                 request.upload.onprogress = function (e) {
                     if(e.lengthComputable) var total = e.total;
                     else var total = Math.ceil(inputblob.size * 1.3);
