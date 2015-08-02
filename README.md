@@ -3,8 +3,10 @@ picEdit
 I'm attempting to reopen the development of this promising plugin. I'm looking for some help! --Jay Sudo
 
 Wish List:
-1. A reset method
-2. Ability to switch from selfie to front-facing cam on Android phones
+<ul>
+	<li>A reset method</li>
+	<li>Ability to switch from selfie to front-facing cam on Android phones</li>
+</ul>
 
 *This plugin is work in progress! Use with caution!* 
 
