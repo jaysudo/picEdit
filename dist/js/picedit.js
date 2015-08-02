@@ -2,6 +2,7 @@
  *  Project: PicEdit
  *  Description: Creates an image upload box with tools to edit the image on the front-end before uploading it to the server
  *  Author: Andy V.
+ *  Forked by: Jay Sudo
  *  License: MIT
  */
 
@@ -694,15 +695,16 @@
 						else _this._filename = _this._filename.match(/^[^\.]*/) + "." + inputblob.type.match(/[^\/]*$/);
 						_this._theformdata.append(inputname, inputblob, _this._filename);
 					}
-					//send request
-					var request = new XMLHttpRequest();
-                    request.onprogress = function(e) {
-                        if(e.lengthComputable) var total = e.total;
-                        else var total = Math.ceil(inputblob.size * 1.3);
-                        var progress = Math.ceil(((e.loaded)/total)*100);
-                        if (progress > 100) progress = 100;
-                        _this.set_messagebox("Please Wait... Uploading... " + progress + "% Uploaded.", false, false);
-                    };
+					 //send request
+                var request = new XMLHttpRequest();
+                // Progress display -- Jay Sudo
+                request.upload.onprogress = function (e) {
+                    if(e.lengthComputable) var total = e.total;
+                    else var total = Math.ceil(inputblob.size * 1.3);
+                    var progress = Math.ceil(((e.loaded)/total)*100);
+                    if (progress > 100) progress = 100;
+                    _this.set_messagebox("Please Wait... Uploading... " + progress + "% Uploaded.", false, false);
+                };
 					request.open(_this._theform.prop("method"), _this._theform.prop("action"), true);
 					request.onload = function(e) {
 						if(this.status != 200) {
@@ -711,7 +713,7 @@
                         else {
                             if(_this.options.redirectUrl === true) window.location.reload();
 						    else if(_this.options.redirectUrl) window.location = _this.options.redirectUrl;
-						    else _this.set_messagebox("Data successfully submitted!");
+						    else _this.set_messagebox("Photo data sent!");
                         }
 						_this.options.formSubmitted(this);
 					};
