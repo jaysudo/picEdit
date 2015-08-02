@@ -52,12 +52,12 @@
 
         /* Prepare the template */
         /*unhide_in_prod*/
-        /*this._template();*/
+         this._template(); 
         /*unhide_in_prod*/
 
-        /*hide_in_prod*/
+        /*hide_in_prod*/ /* 
         this.init();
-        /*hide_in_prod*/
+         */ /*hide_in_prod*/
     }
 
 	Plugin.prototype = {
@@ -694,15 +694,15 @@
 						else _this._filename = _this._filename.match(/^[^\.]*/) + "." + inputblob.type.match(/[^\/]*$/);
 						_this._theformdata.append(inputname, inputblob, _this._filename);
 					}
-					//send request
-					var request = new XMLHttpRequest();
-                    request.onprogress = function(e) {
-                        if(e.lengthComputable) var total = e.total;
-                        else var total = Math.ceil(inputblob.size * 1.3);
-                        var progress = Math.ceil(((e.loaded)/total)*100);
-                        if (progress > 100) progress = 100;
-                        _this.set_messagebox("Please Wait... Uploading... " + progress + "% Uploaded.", false, false);
-                    };
+					 //send request
+                var request = new XMLHttpRequest();
+                request.upload.onprogress = function (e) {
+                    if(e.lengthComputable) var total = e.total;
+                    else var total = Math.ceil(inputblob.size * 1.3);
+                    var progress = Math.ceil(((e.loaded)/total)*100);
+                    if (progress > 100) progress = 100;
+                    _this.set_messagebox("Please Wait... Uploading... " + progress + "% Uploaded.", false, false);
+                };
 					request.open(_this._theform.prop("method"), _this._theform.prop("action"), true);
 					request.onload = function(e) {
 						if(this.status != 200) {
@@ -711,7 +711,7 @@
                         else {
                             if(_this.options.redirectUrl === true) window.location.reload();
 						    else if(_this.options.redirectUrl) window.location = _this.options.redirectUrl;
-						    else _this.set_messagebox("Data successfully submitted!");
+						    else _this.set_messagebox("Photo data sent!");
                         }
 						_this.options.formSubmitted(this);
 					};
@@ -733,7 +733,7 @@
 		},
 		// Prepare the template here
 		_template: function() {
-			var template = 'compiled_template_markup';
+			var template = '<div class="picedit_box"> <div class="picedit_message"> <span class="picedit_control ico-picedit-close" data-action="hide_messagebox"></span> <div><\/div><\/div><div class="picedit_nav_box picedit_gray_gradient"> <div class="picedit_pos_elements"><\/div><div class="picedit_nav_elements"><div class="picedit_element"> <span class="picedit_control picedit_action ico-picedit-pencil" title="Pen Tool"></span> <div class="picedit_control_menu"> <div class="picedit_control_menu_container picedit_tooltip picedit_elm_3"> <label class="picedit_colors"> <span title="Black" class="picedit_control picedit_action picedit_black active" data-action="toggle_button" data-variable="pen_color" data-value="black"></span> <span title="Red" class="picedit_control picedit_action picedit_red" data-action="toggle_button" data-variable="pen_color" data-value="red"></span> <span title="Green" class="picedit_control picedit_action picedit_green" data-action="toggle_button" data-variable="pen_color" data-value="green"></span> </label> <label> <span class="picedit_separator"></span> </label> <label class="picedit_sizes"> <span title="Large" class="picedit_control picedit_action picedit_large" data-action="toggle_button" data-variable="pen_size" data-value="16"></span> <span title="Medium" class="picedit_control picedit_action picedit_medium" data-action="toggle_button" data-variable="pen_size" data-value="8"></span> <span title="Small" class="picedit_control picedit_action picedit_small" data-action="toggle_button" data-variable="pen_size" data-value="3"></span> </label> <\/div><\/div><\/div><div class="picedit_element"><span class="picedit_control picedit_action ico-picedit-insertpicture" title="Crop" data-action="crop_open"></span> <\/div><div class="picedit_element"> <span class="picedit_control picedit_action ico-picedit-redo" title="Rotate"></span> <div class="picedit_control_menu"> <div class="picedit_control_menu_container picedit_tooltip picedit_elm_1"> <label> <span>90° CW</span> <span class="picedit_control picedit_action ico-picedit-redo" data-action="rotate_cw"></span> </label> <label> <span>90° CCW</span> <span class="picedit_control picedit_action ico-picedit-undo" data-action="rotate_ccw"></span> </label> <\/div><\/div><\/div><div class="picedit_element"> <span class="picedit_control picedit_action ico-picedit-arrow-maximise" title="Resize"></span> <div class="picedit_control_menu"> <div class="picedit_control_menu_container picedit_tooltip picedit_elm_2"> <label><span class="picedit_control picedit_action ico-picedit-checkmark" data-action="resize_image"></span><span class="picedit_control picedit_action ico-picedit-close" data-action=""></span> </label> <label> <span>Width (px)</span> <input type="text" class="picedit_input" data-variable="resize_width" value="0"> </label> <label class="picedit_nomargin"> <span class="picedit_control ico-picedit-link" data-action="toggle_button" data-variable="resize_proportions"></span> </label> <label> <span>Height (px)</span> <input type="text" class="picedit_input" data-variable="resize_height" value="0"> </label> <\/div><\/div><\/div></div></div><div class="picedit_canvas_box"><div class="picedit_painter"><canvas></canvas></div><div class="picedit_canvas"><canvas></canvas></div><div class="picedit_action_btns active"> <div class="picedit_control ico-picedit-picture" data-action="load_image"><\/div><div class="picedit_control ico-picedit-camera" data-action="camera_open"><\/div><div class="center">or copy/paste image here</div></div></div><div class="picedit_video"> <video autoplay></video><div class="picedit_video_controls"><span class="picedit_control picedit_action ico-picedit-checkmark" data-action="take_photo"></span><span class="picedit_control picedit_action ico-picedit-close" data-action="camera_close"></span><\/div><\/div><div class="picedit_drag_resize"> <div class="picedit_drag_resize_canvas"></div><div class="picedit_drag_resize_box"><div class="picedit_drag_resize_box_corner_wrap"> <div class="picedit_drag_resize_box_corner"></div></div><div class="picedit_drag_resize_box_elements"><span class="picedit_control picedit_action ico-picedit-checkmark" data-action="crop_image"></span><span class="picedit_control picedit_action ico-picedit-close" data-action="crop_close"></span><\/div><\/div></div></div>';
 			var _this = this;
 			$(this.inputelement).hide().after(template).each(function() {
 				_this.element = $(_this.inputelement).next(".picedit_box");
